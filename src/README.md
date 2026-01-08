@@ -7,8 +7,8 @@
 - Global exception handling
 - Swagger UI
 - Docker & Docker Compose
-- H2 DB (replaceable)
-- Unit tests included
+- H2 DB
+- Unit tests included with 92% test coverage checked by JaCoCo
 
 ## Run locally
 mvn clean package
