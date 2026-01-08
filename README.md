@@ -222,6 +222,10 @@ Continuous Integration is implemented using GitHub Actions.
 - JaCoCo used for coverage reporting
 - Minimum coverage threshold enforced via Maven as 80%
 
+The project has unit tests covering the service and controller layers. Below is a snapshot of the Jacoco coverage report:
+
+![Jacoco Coverage](docs/jacoco-snapshot.png)
+
 ---
 
 ## 12 Factor App Conformance

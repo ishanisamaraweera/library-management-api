@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LibraryController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Library Management System</a> &gt; <a href="index.source.html" class="el_package">com.example.library.controller</a> &gt; <span class="el_source">LibraryController.java</span></div><h1>LibraryController.java</h1><pre class="source lang-java linenums">package com.example.library.controller;
+
+import com.example.library.model.Book;
+import com.example.library.model.Borrower;
+import com.example.library.service.LibraryService;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+/**
+ *
+ * @author ishani.s
+ */
+@RestController
+@RequestMapping(&quot;library-management/api&quot;)
+public class LibraryController {
+    private final LibraryService service;
+
+<span class="fc" id="L19">    public LibraryController(LibraryService service) {</span>
+<span class="fc" id="L20">        this.service = service;</span>
+<span class="fc" id="L21">    }</span>
+
+    @PostMapping(&quot;/borrowers&quot;)
+    public Borrower registerBorrower(@Valid @RequestBody Borrower borrower) {
+<span class="fc" id="L25">        return service.registerBorrower(borrower);</span>
+    }
+
+    /**
+     * Register a single book in the library.
+     *
+     * @param book the book to register
+     * @return the saved book
+     */
+    @PostMapping(&quot;/books&quot;)
+    public Book registerBook(@Valid @RequestBody Book book) {
+<span class="fc" id="L36">        return service.registerBook(book);</span>
+    }
+
+    /**
+     * Register multiple books at once (bulk registration).
+     * All books are saved transactionally.
+     *
+     * @param books the list of books to register
+     * @return the list of saved books
+     */
+    @PostMapping(&quot;/books/bulk&quot;)
+    public List&lt;Book&gt; registerBooks(@Valid @RequestBody List&lt;Book&gt; books) {
+<span class="fc" id="L48">        return service.registerBooks(books);</span>
+    }
+
+    @GetMapping(&quot;/books&quot;)
+    public List&lt;Book&gt; listBooks() {
+<span class="fc" id="L53">        return service.getAllBooks();</span>
+    }
+
+    @PostMapping(&quot;/borrow/{bookId}/borrower/{borrowerId}&quot;)
+    public Book borrowBook(@PathVariable Long bookId, @PathVariable Long borrowerId) {
+<span class="nc" id="L58">        return service.borrowBook(bookId, borrowerId);</span>
+    }
+
+    @PostMapping(&quot;/return/{bookId}&quot;)
+    public Book returnBook(@PathVariable Long bookId) {
+<span class="nc" id="L63">        return service.returnBook(bookId);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

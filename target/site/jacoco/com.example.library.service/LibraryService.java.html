@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LibraryService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Library Management System</a> &gt; <a href="index.source.html" class="el_package">com.example.library.service</a> &gt; <span class="el_source">LibraryService.java</span></div><h1>LibraryService.java</h1><pre class="source lang-java linenums">package com.example.library.service;
+
+import com.example.library.model.Book;
+import com.example.library.model.Borrower;
+import com.example.library.repository.BookRepository;
+import com.example.library.repository.BorrowerRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ *
+ * @author ishani.s
+ */
+@Service
+public class LibraryService {
+
+    private final BookRepository bookRepository;
+    private final BorrowerRepository borrowerRepository;
+
+<span class="fc" id="L22">    public LibraryService(BookRepository bookRepository, BorrowerRepository borrowerRepository) {</span>
+<span class="fc" id="L23">        this.bookRepository = bookRepository;</span>
+<span class="fc" id="L24">        this.borrowerRepository = borrowerRepository;</span>
+<span class="fc" id="L25">    }</span>
+
+    public Borrower registerBorrower(Borrower borrower) {
+<span class="fc" id="L28">        return borrowerRepository.save(borrower);</span>
+    }
+
+    public Book registerBook(Book book) {
+<span class="fc" id="L32">        return bookRepository.save(book);</span>
+    }
+
+    @Transactional
+    public List&lt;Book&gt; registerBooks(List&lt;Book&gt; books) {
+<span class="fc" id="L37">        return bookRepository.saveAll(books);</span>
+    }
+
+    public List&lt;Book&gt; getAllBooks() {
+<span class="fc" id="L41">        return bookRepository.findAll();</span>
+    }
+    @Transactional
+    public Book borrowBook(Long bookId, Long borrowerId) {
+<span class="fc" id="L45">        Book book = bookRepository.findById(bookId)</span>
+<span class="fc" id="L46">                .orElseThrow(() -&gt; new RuntimeException(&quot;Book not found&quot;));</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        if (book.isBorrowed()) {</span>
+<span class="fc" id="L48">            throw new RuntimeException(&quot;Book already borrowed&quot;);</span>
+        }
+<span class="fc" id="L50">        Borrower borrower = borrowerRepository.findById(borrowerId)</span>
+<span class="fc" id="L51">                .orElseThrow(() -&gt; new RuntimeException(&quot;Borrower not found&quot;));</span>
+<span class="fc" id="L52">        book.borrow(borrower);</span>
+<span class="fc" id="L53">        return bookRepository.save(book);</span>
+    }
+
+    @Transactional
+    public Book returnBook(Long bookId) {
+<span class="fc" id="L58">        Book book = bookRepository.findById(bookId)</span>
+<span class="fc" id="L59">                .orElseThrow(() -&gt; new RuntimeException(&quot;Book not found&quot;));</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        if(!book.isBorrowed()){</span>
+<span class="fc" id="L61">          throw new RuntimeException(&quot;Book has not borrowed&quot;);</span>
+        }
+<span class="fc" id="L63">        book.returned();</span>
+<span class="fc" id="L64">        return bookRepository.save(book);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
