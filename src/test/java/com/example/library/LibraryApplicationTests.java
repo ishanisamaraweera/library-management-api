@@ -18,10 +18,10 @@ import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -211,34 +211,12 @@ class LibraryApplicationTests {
   @Test
   void validationError_missingFields() throws Exception {
     String json = """
-                {"isbn":"","title":"","author":""}
-                """;
+            {"isbn":"","title":"","author":""}
+            """;
 
     mockMvc.perform(post("/library-management/api/books")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(json))
             .andExpect(status().isBadRequest());
   }
-
-//  @Test
-//  void testBorrowBookNotFound() throws Exception {
-//    when(service.borrowBook(anyLong(), anyLong()))
-//            .thenThrow(new RuntimeException("Book not found"));
-//
-//    mockMvc.perform(post("/library-management/api/borrow/99/borrower/1")
-//                    .contentType(MediaType.APPLICATION_JSON))
-//            .andExpect(status().isInternalServerError())
-//            .andExpect(content().string("Book not found"));
-//  }
-//
-//  @Test
-//  void testReturnBookNotBorrowed() throws Exception {
-//    when(service.returnBook(anyLong()))
-//            .thenThrow(new RuntimeException("Book has not borrowed"));
-//
-//    mockMvc.perform(post("/library-management/api/return/1")
-//                    .contentType(MediaType.APPLICATION_JSON))
-//            .andExpect(status().isInternalServerError())
-//            .andExpect(content().string("Book has not borrowed"));
-//  }
 }

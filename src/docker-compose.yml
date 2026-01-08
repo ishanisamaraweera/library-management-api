@@ -1,7 +1,9 @@
+version: "3.8"
 
-version: '3.8'
 services:
   library-api:
-    build: main/java/com/example/library
+    build: .
     ports:
       - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
