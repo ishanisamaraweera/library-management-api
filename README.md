@@ -72,16 +72,13 @@ mvn spring-boot:run
 
 or
 
-```bash
-mvn clean package
-java -jar target/library-management-system-1.0.0.jar
-```
-
 ### Run using packaged JAR
 
 ```bash
 mvn clean package
-SPRING_PROFILES_ACTIVE=dev java -jar target/library-management-system-1.0.0.jar**********************************
+set SPRING_PROFILES_ACTIVE=dev
+java -jar target/library-management-api-1.0.0.jar
+
 ```
 
 ---
