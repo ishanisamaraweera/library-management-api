@@ -1,0 +1,7 @@
+
+version: '3.8'
+services:
+  library-api:
+    build: main/java/com/example/library
+    ports:
+      - "8080:8080"
