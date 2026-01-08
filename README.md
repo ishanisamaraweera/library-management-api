@@ -1,9 +1,11 @@
+# Library Management REST API
 
-# Library REST API
+Library Management System
 
 Java 17 Spring Boot RESTful API for managing borrowers and books in a library system.
 
 ## Features
+
 - Register borrowers and books
 - Borrow and return books
 - Enforces one borrower per book copy
@@ -11,9 +13,11 @@ Java 17 Spring Boot RESTful API for managing borrowers and books in a library sy
 - Uses H2 database for simplicity and portability
 
 ## Run
+
 mvn spring-boot:run
 
 ## Endpoints
+
 POST /api/borrowers
 POST /api/books
 GET /api/books
